@@ -4432,6 +4432,8 @@ document.observe("xwiki:dom:loaded", function() {
       //       upon programmatic update if a substitute is found can remove these hackish events
       this.container.observe("datepicker:date:changed", this.onProgrammaticUpdate.bind(this));
       this.onProgrammaticUpdate();
+      this.__input.__datePicker = this;
+      this.__input.fire('datepicker:init');
     },
 
     onProgrammaticUpdate : function() {
@@ -4586,7 +4588,32 @@ document.observe("xwiki:dom:loaded", function() {
             this.__input.fire("xwiki:date:changed");
           }
         }
-    }
+    },
+
+    getFormattedValue: function() {
+      if (!this.dateParts) {
+        return undefined;
+      }
+      var format = "yyyy-MM-dd";
+      if (this.dateParts.decade) {
+        return this.dateParts.decade;
+      } else {
+        var displayedVal = format;
+        if (this.dateParts.year) {
+          displayedVal = displayedVal.replace(/y+/g, this.dateParts.year);
+          if (this.dateParts.month) {
+            displayedVal = displayedVal.replace(/M+/g, this.dateParts.month);
+            if (this.dateParts.day) {
+              displayedVal = displayedVal.replace(/d+/g, this.dateParts.day);
+            }
+          }
+        }
+
+        displayedVal = displayedVal.replace(/[a-zA-Z]+(\W|$)/g, '').replace(/^\W+|\W+$/g, '');
+
+        return displayedVal;
+      }
+    },
   });
 
   Object.extend(widgets.FuzzyDatePicker, {
@@ -4650,7 +4677,7 @@ document.observe("xwiki:dom:loaded", function() {
     ((event &amp;&amp; event.memo.elements) || [$('body')]).each(function(element) {
       (element.hasClassName("fuzzy-date") ? [element] : element.select(".fuzzy-date")).each(function(dateInput) {
         if (!dateInput.__datePicker) {
-          dateInput.__datePicker = new PhenoTips.widgets.FuzzyDatePicker(dateInput);
+          new PhenoTips.widgets.FuzzyDatePicker(dateInput);
         }
       });
     });
