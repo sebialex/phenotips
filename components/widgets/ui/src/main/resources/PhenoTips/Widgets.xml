@@ -4594,7 +4594,7 @@ document.observe("xwiki:dom:loaded", function() {
       if (!this.dateParts) {
         return undefined;
       }
-      var format = "yyyy-MM-dd";
+      var format = "$!services.recordConfiguration.activeConfiguration.dateOfBirthFormat" || "yyyy-MM-dd";
       if (this.dateParts.decade) {
         return this.dateParts.decade;
       } else {
@@ -4696,7 +4696,7 @@ document.observe("xwiki:dom:loaded", function() {
       <name>Fuzzy datepicker</name>
     </property>
     <property>
-      <parse/>
+      <parse>1</parse>
     </property>
     <property>
       <use>currentPage</use>
