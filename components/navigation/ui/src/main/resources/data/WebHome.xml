@@ -119,6 +119,10 @@ $!value
         <cache>0</cache>
         <customDisplay>**{{translation key="phenotips.DBConfigurationClass.metaInfo" /}}**
 
+{{velocity}}
+$xwiki.ssx.use('PhenoTips.DBConfigurationClass')##
+{{/velocity}}
+
 {{velocity output=false}}
 #set ($docFields = ['doc.name', 'doc.creator', 'doc.author', 'doc.creationDate', 'doc.date'])
 #macro(__xclass__displayLivetableColOption $option $value)
@@ -132,7 +136,7 @@ $!value
 {{/velocity}}
 
 {{velocity}}{{html wiki=false clean=false}}
-&lt;ul style="list-style-type: none; margin: 0 0 0 16px"&gt;
+&lt;ul class="custom-display-list col-2"&gt;
 #foreach ($option in $docFields)
   #__xclass__displayLivetableColOption($option $value)
 #end
