@@ -110,6 +110,14 @@ public class VariantListControllerTest
 
     private static final String SANGER_KEY = "sanger";
 
+    private static final String CHROMOSOME_KEY = "chromosome";
+
+    private static final String START_POSITION_KEY = "start_position";
+
+    private static final String END_POSITION_KEY = "end_position";
+
+    private static final String REFERENCE_GENOME_KEY = "reference_genome";
+
     @Before
     public void setUp() throws Exception
     {
@@ -144,7 +152,7 @@ public class VariantListControllerTest
         List<String> result =
             ((AbstractComplexController<Map<String, String>>) this.mocker.getComponentUnderTest()).getProperties();
 
-        Assert.assertEquals(12, result.size());
+        Assert.assertEquals(16, result.size());
         Assert.assertThat(result, Matchers.hasItem(VARIANT_KEY));
         Assert.assertThat(result, Matchers.hasItem(GENESYMBOL_KEY));
         Assert.assertThat(result, Matchers.hasItem(PROTEIN_KEY));
@@ -157,6 +165,10 @@ public class VariantListControllerTest
         Assert.assertThat(result, Matchers.hasItem(EVIDENCE_KEY));
         Assert.assertThat(result, Matchers.hasItem(SEGREGATION_KEY));
         Assert.assertThat(result, Matchers.hasItem(SANGER_KEY));
+        Assert.assertThat(result, Matchers.hasItem(CHROMOSOME_KEY));
+        Assert.assertThat(result, Matchers.hasItem(START_POSITION_KEY));
+        Assert.assertThat(result, Matchers.hasItem(END_POSITION_KEY));
+        Assert.assertThat(result, Matchers.hasItem(REFERENCE_GENOME_KEY));
     }
 
     @Test
@@ -236,7 +248,7 @@ public class VariantListControllerTest
     public void checkLoadParsingOfInterpretationKey() throws ComponentLookupException
     {
         addVariantFields(INTERPRETATION_KEY, new String[] {
-        "pathogenic", "likely_pathogenic", "likely_benign", "benign", "variant_u_s", "investigation_n" });
+            "pathogenic", "likely_pathogenic", "likely_benign", "benign", "variant_u_s", "investigation_n" });
 
         PatientData<Map<String, String>> result = this.mocker.getComponentUnderTest().load(this.patient);
 
@@ -293,8 +305,8 @@ public class VariantListControllerTest
     public void checkLoadParsingOfEffectKey() throws ComponentLookupException
     {
         addVariantFields(EFFECT_KEY, new String[] {
-        "insertion_in_frame", "insertion_frameshift", "deletion_in_frame", "deletion_frameshift", "indel_in_frame",
-        "indel_frameshift", "repeat_expansion", "synonymous" });
+            "insertion_in_frame", "insertion_frameshift", "deletion_in_frame", "deletion_frameshift", "indel_in_frame",
+            "indel_frameshift", "repeat_expansion", "synonymous" });
 
         PatientData<Map<String, String>> result = this.mocker.getComponentUnderTest().load(this.patient);
 
